@@ -10,6 +10,7 @@ use SilverStripe\Forms\FieldList;
 use SilverStripe\Forms\NumericField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\ORM\DataObject;
+use SilverStripe\ORM\FieldType\DBHTMLText;
 use XD\Narrowcasting\Models\Presentation;
 
 /**
@@ -30,11 +31,16 @@ class Slide extends DataObject
 
     private static $db = [
         'Title' => 'Varchar',
+        'Sort' => 'Int',
         'AutoSlide' => 'Int',
         'Transition' => 'Enum("none,fade,slide,convex,concave,zoom","none")',
         'TransitionSpeed' => 'Enum("default,fast,slow","default")',
         'BackgroundColor' => 'Varchar',
     ];
+
+    private static $default_sort = '"Sort" IS NULL ASC, "Sort" ASC';
+
+    private static $icon = 'font-icon-attention';
 
     private static $casting = [
         'SlideConfigAttributes' => 'HTMLFragment',
@@ -43,6 +49,10 @@ class Slide extends DataObject
 
     private static $has_one = [
         'Parent' => Presentation::class
+    ];
+
+    private static $summary_fields = [
+        'SummaryColumn'
     ];
 
     public function getType()
@@ -162,5 +172,20 @@ class Slide extends DataObject
     {
         $ancestry = $this->getClassAncestry();
         return $this->renderWith(array_reverse($ancestry));
+    }
+
+    public function getSummary()
+    {
+        return _t(__CLASS__ . '.EmptySummary', 'Empty summary');
+    }
+
+    public function getSummaryColumn()
+    {
+        return $this->renderWith('XD\\Narrowcasting\\Summary');
+    }
+
+    public function getSummaryIcon()
+    {
+        return $this->config()->get('icon');
     }
 }

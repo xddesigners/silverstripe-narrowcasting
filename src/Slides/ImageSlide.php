@@ -34,6 +34,13 @@ class ImageSlide extends Slide
         'BackgroundOpacity' => 100
     ];
 
+    private static $icon = 'font-icon-block-file';
+
+    public function getType()
+    {
+        return _t(__CLASS__ . '.Type', 'Image slide');
+    }
+
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();

@@ -3,7 +3,7 @@
 namespace XD\Narrowcasting\Slides;
 
 use SilverStripe\Forms\CheckboxField;
-use SilverStripe\Forms\TextField;
+use SilverStripe\Forms\TextareaField;
 
 /**
  * Class IFrameSlide
@@ -17,16 +17,23 @@ class IFrameSlide extends Slide
     private static $table_name = 'Narrowcasting_IFrameSlide';
 
     private static $db = [
-        'BackgroundIframe' => 'Varchar',
+        'BackgroundIframe' => 'Text',
         'BackgroundInteractive' => 'Boolean',
     ];
+
+    private static $icon = 'font-icon-block-embed';
+
+    public function getType()
+    {
+        return _t(__CLASS__ . '.Type', 'iFrame slide');
+    }
 
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
 
         $fields->addFieldsToTab('Root.Main', [
-            TextField::create('BackgroundIframe', _t(__CLASS__ . '.BackgroundIframe', 'Background iframe')),
+            TextareaField::create('BackgroundIframe', _t(__CLASS__ . '.BackgroundIframe', 'Background iframe')),
         ]);
 
         // Slide settings

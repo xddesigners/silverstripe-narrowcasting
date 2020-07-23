@@ -4,11 +4,13 @@ namespace XD\Narrowcasting\Models;
 
 use SilverStripe\Control\Controller;
 use SilverStripe\Control\Director;
+use SilverStripe\Forms\GridField\GridField;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\HasManyList;
 use SilverStripe\Versioned\Versioned;
 use XD\Narrowcasting\Extensions\PresentationConfigExtension;
 use XD\Narrowcasting\Slides\Slide;
+use XD\Narrowcasting\GridField\GridFieldConfig_Slides;
 
 /**
  * Class Presentation
@@ -40,8 +42,13 @@ class Presentation extends DataObject
         PresentationConfigExtension::class
     ];
 
-    public function getCMSFields(){
+    public function getCMSFields() {
         $fields = parent::getCMSFields();
+        $fields->removeByName('Slides');
+        $fields->addFieldsToTab('Root.Main', [
+            GridField::create('Slides', _t(__CLASS__ . '.Slides', 'Slides'), $this->Slides(), GridFieldConfig_Slides::create())
+        ]);
+
         return $fields;
     }
 

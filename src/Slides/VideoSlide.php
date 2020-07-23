@@ -35,6 +35,13 @@ class VideoSlide extends Slide
         'BackgroundOpacity' => 100
     ];
 
+    private static $icon = 'font-icon-block-media';
+
+    public function getType()
+    {
+        return _t(__CLASS__ . '.Type', 'Video slide');
+    }
+
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();

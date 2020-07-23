@@ -104,9 +104,9 @@ class DisplayController extends ContentController
                 $presentation->ID,
                 $presentation->LastEdited
             ));
-
+            
             if ($slideId && ($slide = $presentation->Slides()->find('ID', $slideId)) && $slide->exists()) {
-                return $this->renderWith(['XD\\NarrowCasting\\Presentation_slide', 'Page'], $slide);
+                return $this->renderWith(['XD\\NarrowCasting\\Presentation_slide', 'XD\\NarrowCasting\\Presentation', 'Page'], $slide);
             } else {
                 return $this->renderWith(['XD\\NarrowCasting\\Presentation', 'Page'], $presentation);
             }

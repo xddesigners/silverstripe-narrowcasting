@@ -18,6 +18,13 @@ class TextSlide extends Slide
         'Content' => 'HTMLText',
     ];
 
+    private static $icon = 'font-icon-block-content';
+
+    public function getType()
+    {
+        return _t(__CLASS__ . '.Type', 'Text slide');
+    }
+
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
