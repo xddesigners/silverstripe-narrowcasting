@@ -1,0 +1,10 @@
+---
+Name: narrowcasting_extensions
+---
+SilverStripe\SiteConfig\SiteConfig:
+  extensions:
+    - XD\Narrowcasting\Extensions\SiteConfigExtension
+    - XD\Narrowcasting\Extensions\PresentationConfigExtension
+SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest:
+  extensions:
+    - XD\NarrowCasting\Extensions\PresentationCMSExtension

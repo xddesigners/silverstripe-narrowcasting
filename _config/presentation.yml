@@ -1,0 +1,19 @@
+---
+Name: narrowcasting_presentation
+Except:
+  environment: 'live'
+---
+# show controls on non live modes
+SilverStripe\SiteConfig\SiteConfig:
+  presentation_default_config:
+    controls: false
+    progress: false
+    slideNumber: false
+    autoSlideStoppable: false
+
+#XD\Narrowcasting\Models\Presentation:
+#  presentation_default_config:
+#    controls: false
+#    progress: false
+#    slideNumber: false
+#    autoSlideStoppable: false

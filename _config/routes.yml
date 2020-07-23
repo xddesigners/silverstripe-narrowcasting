@@ -1,0 +1,9 @@
+---
+Name: narrowcasting_routes
+After:
+  - '#rootroutes'
+  - '#coreroutes'
+---
+SilverStripe\Control\Director:
+  rules:
+    'display//$Action/$ID/$SlideID': XD\Narrowcasting\Controller\DisplayController

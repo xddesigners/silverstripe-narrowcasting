@@ -1,0 +1,7 @@
+tools/phing-metadata
+node_modules
+.buildpath
+.project
+.settings
+.idea
+.DS_Store
