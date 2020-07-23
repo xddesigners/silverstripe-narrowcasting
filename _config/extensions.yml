@@ -8,3 +8,6 @@ SilverStripe\SiteConfig\SiteConfig:
 SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest:
   extensions:
     - XD\NarrowCasting\Extensions\PresentationCMSExtension
+SilverStripe\Admin\LeftAndMain:
+  extensions:
+    - XD\Narrowcasting\Extensions\NarrowcastingLeftAndMainExtension

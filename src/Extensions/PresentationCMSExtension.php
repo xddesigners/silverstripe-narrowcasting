@@ -3,7 +3,6 @@
 namespace XD\Narrowcasting\Extensions;
 
 use SilverStripe\Forms\FieldList;
-use SilverStripe\Forms\FormAction;
 use SilverStripe\Forms\GridField\GridFieldDetailForm_ItemRequest;
 use SilverStripe\Forms\LiteralField;
 use SilverStripe\ORM\DataExtension;
