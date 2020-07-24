@@ -106,9 +106,9 @@ class DisplayController extends ContentController
             ));
             
             if ($slideId && ($slide = $presentation->Slides()->find('ID', $slideId)) && $slide->exists()) {
-                return $this->renderWith(['XD\\NarrowCasting\\Presentation_slide', 'XD\\NarrowCasting\\Presentation', 'Page'], $slide);
+                return $this->renderWith(['XD\\Narrowcasting\\Presentation_slide', 'XD\\Narrowcasting\\Presentation', 'Page'], $slide);
             } else {
-                return $this->renderWith(['XD\\NarrowCasting\\Presentation', 'Page'], $presentation);
+                return $this->renderWith(['XD\\Narrowcasting\\Presentation', 'Page'], $presentation);
             }
         }
 
@@ -133,7 +133,7 @@ class DisplayController extends ContentController
 
             return $this->customise(new ArrayData([
                 'Settings' => $display->getKioskConfig()
-            ]))->renderWith('XD\\NarrowCasting\\DisplayKioskConfig');
+            ]))->renderWith('XD\\Narrowcasting\\DisplayKioskConfig');
         }
 
         return $this->httpError(404);
