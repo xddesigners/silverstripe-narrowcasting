@@ -64,7 +64,7 @@ class Slide extends DataObject
     public function getCMSFields()
     {
         $fields = parent::getCMSFields();
-        $fields->removeByName(['ParentID']);
+        $fields->removeByName(['ParentID', 'Sort']);
 
         if ($this->ClassName === Slide::class) {
             $fields = new FieldList();

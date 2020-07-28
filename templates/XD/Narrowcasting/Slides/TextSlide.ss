@@ -1,2 +1,2 @@
-<%-- Empty Base slide --%>
-<p>Text SLIDE!</p>
+<h1>$Title</h1>
+$Content

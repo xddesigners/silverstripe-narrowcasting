@@ -1,2 +1,1 @@
-<%-- Empty Base slide --%>
-<p>Image SLIDE!</p>
+<%-- Image is set in Presentation_slide.ss --%>

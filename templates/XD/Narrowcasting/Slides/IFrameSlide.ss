@@ -1,2 +1,1 @@
-<%-- Empty Base slide --%>
-<p>IFrame SLIDE!</p>
+<%-- iFrame is set in Presentation_slide.ss --%>

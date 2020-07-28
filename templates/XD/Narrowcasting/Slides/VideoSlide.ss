@@ -1,2 +1,1 @@
-<%-- Empty Base slide --%>
-<p>Video SLIDE!</p>
+<%-- Video is set in Presentation_slide.ss --%>
