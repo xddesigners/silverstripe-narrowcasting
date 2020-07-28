@@ -30,6 +30,10 @@ class ImageSlide extends Slide
         'BackgroundImage' => Image::class
     ];
 
+    private static $owns = [
+        'BackgroundImage'
+    ];
+
     private static $defaults = [
         'BackgroundOpacity' => 100
     ];
