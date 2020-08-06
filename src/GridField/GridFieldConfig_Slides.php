@@ -8,7 +8,9 @@ use SilverStripe\Forms\GridField\GridFieldDataColumns;
 use SilverStripe\Forms\GridField\GridFieldDeleteAction;
 use SilverStripe\Forms\GridField\GridFieldDetailForm;
 use SilverStripe\Forms\GridField\GridFieldEditButton;
+use SilverStripe\Forms\GridField\GridFieldPaginator;
 use SilverStripe\Forms\GridField\GridFieldToolbarHeader;
+use SilverStripe\Forms\GridField\GridFieldVersionedState;
 use SilverStripe\ORM\HasManyList;
 use Symbiote\GridFieldExtensions\GridFieldAddNewInlineButton;
 use Symbiote\GridFieldExtensions\GridFieldAddNewMultiClass;
@@ -28,11 +30,13 @@ class GridFieldConfig_Slides extends GridFieldConfig
         parent::__construct();
         $this->addComponent($multiClass = new GridFieldAddNewMultiClass());
         $this->addComponent(new GridFieldDataColumns());
-        $this->addComponent(new GridFieldDetailForm());
+        $this->addComponent(new GridFieldVersionedState());
+        $this->addComponent(new GridFieldDetailForm(null, true, true));
         $this->addComponent(new GridFieldOrderableRows());
         $this->addComponent(new GridFieldEditButton());
         $this->addComponent(new GridFieldDeleteAction());
         $this->addComponent(new GridField_ActionMenu());
+        $this->addComponent(new GridFieldPaginator());
 
         if (empty($classes)) {
             $classes = Slide::getAvailableSlides();

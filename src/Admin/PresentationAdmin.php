@@ -3,6 +3,7 @@
 namespace XD\Narrowcasting\Admin;
 
 use SilverStripe\Admin\ModelAdmin;
+use XD\Narrowcasting\Models\Color;
 use XD\Narrowcasting\Models\Presentation;
 
 class PresentationAdmin extends ModelAdmin
@@ -14,6 +15,7 @@ class PresentationAdmin extends ModelAdmin
     private static $menu_icon_class = 'font-icon-fast-forward';
 
     private static $managed_models = [
-        Presentation::class
+        Presentation::class,
+        Color::class
     ];
 }

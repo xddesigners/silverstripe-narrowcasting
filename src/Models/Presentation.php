@@ -37,6 +37,10 @@ class Presentation extends DataObject
         'Slides'
     ];
 
+    private static $owns = [
+        'Slides'
+    ];
+
     private static $extensions = [
         Versioned::class,
         PresentationConfigExtension::class

@@ -11,6 +11,8 @@ use SilverStripe\Forms\NumericField;
 use SilverStripe\Forms\TextField;
 use SilverStripe\ORM\DataObject;
 use SilverStripe\ORM\FieldType\DBHTMLText;
+use SilverStripe\Versioned\Versioned;
+use XD\Narrowcasting\Models\Color;
 use XD\Narrowcasting\Models\Presentation;
 
 /**
@@ -33,9 +35,14 @@ class Slide extends DataObject
         'Title' => 'Varchar',
         'Sort' => 'Int',
         'AutoSlide' => 'Int',
-        'Transition' => 'Enum("none,fade,slide,convex,concave,zoom","none")',
+        'Transition' => 'Enum("default,none,fade,slide,convex,concave,zoom","default")',
         'TransitionSpeed' => 'Enum("default,fast,slow","default")',
-        'BackgroundColor' => 'Varchar',
+    ];
+
+    private static $has_one = [
+        'Parent' => Presentation::class,
+        'TextColor' => Color::class,
+        'BackgroundColor' => Color::class
     ];
 
     private static $default_sort = '"Sort" IS NULL ASC, "Sort" ASC';
@@ -47,13 +54,14 @@ class Slide extends DataObject
         'getSlideConfigAttributes' => 'HTMLFragment'
     ];
 
-    private static $has_one = [
-        'Parent' => Presentation::class
-    ];
-
     private static $summary_fields = [
         'SummaryColumn'
     ];
+
+    private static $extensions = [
+        Versioned::class
+    ];
+
 
     public function getType()
     {
@@ -80,6 +88,12 @@ class Slide extends DataObject
             TextField::create('Title', _t(__CLASS__ . '.Title', 'Title')),
         ]);
 
+        $field = Color::getFormField('TextColorID', 'Text color');
+        $fields->addFieldToTab('Root.Main', $field);
+
+        $field = Color::getFormField('BackgroundColorID', 'Background color');
+        $fields->addFieldToTab('Root.Main', $field);
+
         // Slide settings
         $fields->addFieldsToTab('Root.Settings', [
             NumericField::create('AutoSlide', _t(__CLASS__ . '.AutoSlide', 'Slide duration in seconds'))
@@ -94,7 +108,6 @@ class Slide extends DataObject
                 _t(__CLASS__ . '.TransitionSpeed', 'Transition speed'),
                 $this->dbObject('TransitionSpeed')->enumValues()
             ),
-            TextField::create('BackgroundColor', _t(__CLASS__ . '.BackgroundColor', 'Background color'))
         ]);
 
         return $fields;
@@ -104,13 +117,47 @@ class Slide extends DataObject
     {
         $config = array_filter([
             'data-autoslide' => ($autoSlide = $this->AutoSlide) > 0 ? ($autoSlide * 1000) : null,
-            'data-transition' => ($transition = $this->Transition) !== 'none' ? $transition : 'none',
+            'data-transition' => ($transition = $this->Transition) !== 'default' ? $transition : null,
             'data-Transition-speed' => ($speed = $this->TransitionSpeed) !== 'default' ? $speed : null,
-            'data-background-color' => $this->BackgroundColor ?: null
+            'data-background-color' => $this->AutoBackgroundColor() ?: null
         ]);
 
         $this->extend('updateSlideConfig', $config);
         return $config;
+    }
+
+
+    public function AutoBackgroundColor()
+    {
+        if (($color = $this->owner->BackgroundColor()) && $color->exists()){
+            return $color->getHexCode();
+        }
+
+        if (($color = Color::getDefault()) && $color->exists()) {
+            return $color->getHexCode();
+        }
+
+        return null;
+    }
+
+    public function AutoTextColor()
+    {
+        if (($color = $this->owner->TextColor()) && $color->exists()) {
+            return $color->getHexCode();
+        }
+
+        if (($color = Color::getDefault()) && $color->exists()) {
+            return $color->getHexCode();
+        }
+
+        return null;
+    }
+
+    public function updateSlideConfig(&$config)
+    {
+        if ($backgroundColor = $this->AutoBackgroundColor()) {
+            $config['data-background-color'] = $backgroundColor;
+        }
     }
 
     public function getSlideConfigAttributes()
@@ -167,7 +214,7 @@ class Slide extends DataObject
     {
         return 'slide-' . $this->ID;
     }
-    
+
     public function forTemplate()
     {
         $ancestry = $this->getClassAncestry();
